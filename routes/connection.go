@@ -4,14 +4,17 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"os"
 	"time"
 
+	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 func DBinstance() *mongo.Client {
-	MongoDb := "mongodb://127.0.0.1:27017/portfolio"
+	godotenv.Load()
+	MongoDb := os.Getenv("DATABASE_URI")
 
 	clientOptions := options.Client().ApplyURI(MongoDb)
 	client, err := mongo.Connect(context.Background(), clientOptions)
